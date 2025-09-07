@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:upward_mobile/config/config.dart';
+import 'package:upward_mobile/screens/onboarding_screen/onboarding_screen.dart';
+import 'package:upward_mobile/screens/tasks_screen/tasks_screen.dart';
+import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/screens/splash_screen/bloc/starter_bloc.dart';
 import 'package:upward_mobile/theme/palette.dart';
 import 'package:upward_mobile/theme/theme_provider.dart';
@@ -26,7 +28,23 @@ class _SplashScreenState extends State<SplashScreen> {
     widget.palette = ThemeProvider.of(context)!.theme.palette;
 
     return BlocConsumer<StarterBloc, StarterState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state.status == StarterStatus.authenticated) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            TasksScreen.routePath,  (predicate) => false,
+          );
+          return;
+        }
+
+        if (state.status == StarterStatus.unauthenticated) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            OnboardingScreen.routePath, (predicate) => false,
+          );
+          return;
+        }
+      },
       builder: (context, state) {
         if (mounted && state.status == StarterStatus.initial) {
           context.read<StarterBloc>().add(
@@ -49,20 +67,13 @@ class _SplashScreenState extends State<SplashScreen> {
                     child: Text(
                       Constants.appName,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 52.0,
+                        fontSize: 54.0,
                         fontFamily: "Pacifico",
                         color: widget.palette.isDark ? widget.palette.textColor(1.0) : widget.palette.primaryColor(1.0),
                       ),
                     ),
                   ),
                 ),
-                Text(
-                  "From",
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    fontSize: 13.0,
-                  ),
-                ),
-                const SizedBox(height: 4.0),
                 Text(
                   Constants.copyright,
                   style: Theme.of(context).textTheme.bodyMedium,

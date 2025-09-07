@@ -1,28 +1,31 @@
 import 'dart:developer';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 
 import 'package:upward_mobile/app/app.dart';
-import 'package:upward_mobile/blocs/auth/auth_bloc.dart';
 import 'package:upward_mobile/blocs/localization/localization_cubit.dart';
 import 'package:upward_mobile/blocs/theme/theme_cubit.dart';
-import 'package:upward_mobile/bootstrap/start_services.dart';
+import 'package:upward_mobile/utilities/config.dart';
+import 'package:upward_mobile/models/user.dart';
 import 'package:upward_mobile/observers/app_bloc_observer.dart';
-import 'package:upward_mobile/repositories/user_repository.dart';
 import 'package:upward_mobile/utilities/hooks.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kReleaseMode) {
-    debugPrint = (String? message, {int? wrapWidth}) {};
-  }
 
   // Init services
-  await startServices();
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  Hive
+    ..init(appDocumentDirectory.path)
+    ..registerAdapter(UserAdapter());
+  // Open box
+  await Hive.openBox(Constants.userTable);
+  await Hive.openBox(Constants.upwardTable);
 
   // Error handler ...
   FlutterError.onError = (details) {
@@ -50,33 +53,19 @@ class _MainAppState extends State<MainApp> {
     // Check brightness
     var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
 
-    return MultiRepositoryProvider(
+    return MultiBlocProvider(
       providers: [
-        RepositoryProvider<UserRepository>(
-          create: (context) => UserRepository(),
+        BlocProvider<LocalizationCubit>(
+          lazy: false,
+          create: (BuildContext context) => LocalizationCubit(),
+        ),
+        BlocProvider<ThemeCubit>(
+          create: (BuildContext context) => ThemeCubit(
+            brightness == Brightness.dark ? ThemeStatusEnum.dark : ThemeStatusEnum.light,
+          ),
         ),
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider<LocalizationCubit>(
-            lazy: false,
-            create: (BuildContext context) => LocalizationCubit(),
-          ),
-          BlocProvider<ThemeCubit>(
-            create: (BuildContext context) => ThemeCubit(
-              brightness == Brightness.dark ? ThemeStatusEnum.dark : ThemeStatusEnum.light,
-            ),
-          ),
-          BlocProvider<AuthBloc>(
-            create: (BuildContext context) {
-              return AuthBloc(
-                repository: RepositoryProvider.of<UserRepository>(context),
-              );
-            },
-          ),
-        ],
-        child: UpwardApp(),
-      ),
+      child: UpwardApp(),
     );
   }
 }

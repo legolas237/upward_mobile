@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:upward_mobile/blocs/localization/localization_cubit.dart';
 import 'package:upward_mobile/l10n/app_localizations.dart' show AppLocalizations;
-import 'package:upward_mobile/config/config.dart';
+import 'package:upward_mobile/screens/tasks_screen/tasks_screen.dart';
+import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/screens/onboarding_screen/bloc/onboarding_bloc.dart';
 import 'package:upward_mobile/theme/palette.dart';
 import 'package:upward_mobile/theme/theme_provider.dart';
@@ -56,7 +57,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       localizationCubit.state.language
     ];
 
-    return BlocBuilder<OnboardingBloc, OnboardingState>(
+    return BlocConsumer<OnboardingBloc, OnboardingState>(
+      listener: (context, state) {
+        if(state.status == OnboardingStatus.success) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            TasksScreen.routePath,  (predicate) => false,
+          );
+        }
+      },
       builder: (context, state) {
         final processing = state.status == OnboardingStatus.processing;
 

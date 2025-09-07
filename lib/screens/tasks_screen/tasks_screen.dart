@@ -5,20 +5,20 @@ import 'package:upward_mobile/theme/theme_provider.dart';
 import 'package:upward_mobile/widgets/app_scaffold.dart';
 
 // ignore: must_be_immutable
-class HomeScreen extends StatefulWidget {
+class TasksScreen extends StatefulWidget {
   static const String routePath = "/home";
 
-  HomeScreen({
+  TasksScreen({
     super.key,
   });
 
   late Palette palette;
 
   @override
-  State<StatefulWidget> createState() => _HomeScreenState();
+  State<StatefulWidget> createState() => _TasksScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TasksScreenState extends State<TasksScreen> {
   @override
   Widget build(BuildContext context) {
     // Get theme palette

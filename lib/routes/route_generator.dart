@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:upward_mobile/screens/home_screen/home_screen.dart';
-import 'package:upward_mobile/screens/home_screen/home_screen_bloc_provider.dart';
 
 import 'package:upward_mobile/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:upward_mobile/screens/onboarding_screen/onboarding_screen_bloc_provider.dart';
 import 'package:upward_mobile/screens/splash_screen/splash_screen.dart';
 import 'package:upward_mobile/screens/splash_screen/splash_screen_bloc_provider.dart';
+import 'package:upward_mobile/screens/tasks_screen/tasks_screen.dart';
+import 'package:upward_mobile/screens/tasks_screen/tasks_screen_bloc_provider.dart';
 import 'package:upward_mobile/widgets/app_bar_action.dart';
-import 'package:upward_mobile/widgets/app_icon_action.dart';
 import 'package:upward_mobile/widgets/app_scaffold.dart';
 
 class RouteGenerator {
-  // For navigator
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  static NavigatorState? get navigator => navigatorKey.currentState;
-
-  // Routes
-
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    // Getting arguments passed in while calling Navigator.pushNamed
     final args = settings.arguments;
 
     switch (settings.name) {
@@ -32,10 +24,10 @@ class RouteGenerator {
           settings: settings,
           builder: (context) => OnboardingScreenScreenBlocProvider(),
         );
-      case HomeScreen.routePath:
+      case TasksScreen.routePath:
         return MaterialPageRoute(
           settings: settings,
-          builder: (context) => HomeScreenBlocProvider(),
+          builder: (context) => TasksScreenBlocProvider(),
         );
       default:
         // If there is no such named route in the switch statement, e.g. /third
@@ -46,9 +38,7 @@ class RouteGenerator {
               centerTitle: true,
               title: 'Error',
               leading: AppBarActionWidget(
-                icon: AppBarActionIconWidget(
-                  icon: Icons.close,
-                ),
+                icon: Icons.close,
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

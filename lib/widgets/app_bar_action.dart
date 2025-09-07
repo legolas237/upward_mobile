@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:upward_mobile/config/config.dart';
+import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/theme/palette.dart';
 import 'package:upward_mobile/theme/theme_provider.dart';
 
@@ -17,7 +17,7 @@ class AppBarActionWidget extends StatelessWidget {
 
   late Palette palette;
 
-  final Widget icon;
+  final IconData icon;
   final Color? color;
   final Color? backgroundColor;
   final Color? overlayColor;
@@ -41,7 +41,11 @@ class AppBarActionWidget extends StatelessWidget {
             onPressed!();
           }
         },
-        icon: icon,
+        icon: Icon(
+          icon,
+          color: color,
+          size: Constants.iconSize,
+        ),
         iconSize: Constants.iconSize,
         highlightColor: overlayColor ?? palette.overlayLightColor(1.0),
         hoverColor: overlayColor ?? palette.overlayLightColor(1.0),

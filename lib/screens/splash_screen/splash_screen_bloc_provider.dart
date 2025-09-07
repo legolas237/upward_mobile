@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:upward_mobile/repositories/user_repository.dart';
 import 'package:upward_mobile/screens/splash_screen/bloc/starter_bloc.dart';
 import 'package:upward_mobile/screens/splash_screen/splash_screen.dart';
 
@@ -12,9 +11,7 @@ class SplashScreenBlocProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<StarterBloc>(
-      create: (context) => StarterBloc(
-        repository: RepositoryProvider.of<UserRepository>(context),
-      ),
+      create: (context) => StarterBloc(),
       child: SplashScreen(),
     );
   }

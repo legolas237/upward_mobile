@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-import 'package:upward_mobile/config/config.dart';
+import 'package:upward_mobile/utilities/config.dart';
 
 part 'user.g.dart';
 

@@ -2,10 +2,9 @@ part of 'starter_bloc.dart';
 
 enum StarterStatus {
   initial,
-  fetching,
-  success,
+  authenticated,
+  unauthenticated,
   failed,
-  intermediate,
 }
 
 @immutable

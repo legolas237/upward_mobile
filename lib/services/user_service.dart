@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
-import 'package:upward_mobile/config/config.dart';
+import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/models/user.dart';
-import 'package:upward_mobile/repositories/storage_repository.dart';
 
 @immutable
 class UserService {
   const UserService();
 
   Future<User?> user() async {
-    var hiveBox = Hive.lazyBox(Constants.userTable);
+    var hiveBox = Hive.box(Constants.userTable);
 
     // Finally ..
     if(hiveBox.isEmpty) {
@@ -21,20 +20,17 @@ class UserService {
   }
 
   Future<void> auth(User user) async {
-    await Hive.lazyBox(Constants.userTable).add(user);
+    await Hive.box(Constants.userTable).add(user);
   }
 
   Future<void> logOut() async {
-    // Storage
-    await StorageRepository.clearAll();
-
     // Data base
     // Users
-    final userBox = Hive.lazyBox(Constants.userTable);
+    final userBox = Hive.box(Constants.userTable);
     if(userBox.isOpen) await userBox.close();
     await userBox.deleteFromDisk();
     // Data collection
-    final upwardBox = Hive.lazyBox(Constants.upwardTable);
+    final upwardBox = Hive.box(Constants.upwardTable);
     if(upwardBox.isOpen) await upwardBox.close();
     await upwardBox.deleteFromDisk();
   }

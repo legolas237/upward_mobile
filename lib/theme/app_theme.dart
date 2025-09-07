@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:upward_mobile/config/config.dart';
+import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/theme/palette.dart';
 
 @immutable

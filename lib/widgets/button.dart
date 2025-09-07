@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:upward_mobile/config/config.dart';
+import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/theme/palette.dart';
 import 'package:upward_mobile/theme/theme_provider.dart';
 import 'package:upward_mobile/widgets/spinner.dart';

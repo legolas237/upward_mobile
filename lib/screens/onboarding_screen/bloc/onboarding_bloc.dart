@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import 'package:upward_mobile/blocs/auth/auth_bloc.dart';
 import 'package:upward_mobile/models/user.dart';
 import 'package:upward_mobile/repositories/user_repository.dart';
 
@@ -10,15 +9,13 @@ part 'onboarding_event.dart';
 part 'onboarding_state.dart';
 
 class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
-  OnboardingBloc({
-    required UserRepository repository,
-  }) : _repository = repository, super(const OnboardingState()) {
+  OnboardingBloc() : super(const OnboardingState()) {
 
     // Init events emission ...
     on<EnrollUser>(_onEnrollUser);
   }
 
-  final UserRepository _repository;
+  final UserRepository _repository = UserRepository();
 
   Future<void> _onEnrollUser(EnrollUser event, Emitter<OnboardingState> emit,) async {
     emit(state.copyWith(
@@ -33,13 +30,11 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
       final user = User(name: event.name);
 
       // Store user
-      await _repository.provider.auth(user);
+      await _repository.auth(user);
 
-      // Notify bloc
-      _repository.statusChange(
-        status: AuthStatus.authenticated,
-        user: user,
-      );
+      emit(state.copyWith(
+        status: OnboardingStatus.success,
+      ));
       return;
     } catch (exception, stackTrace) {
       debugPrint(exception.toString());

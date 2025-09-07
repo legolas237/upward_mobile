@@ -1,8 +1,7 @@
-import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:upward_mobile/config/config.dart';
+import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/theme/palette.dart';
 import 'package:upward_mobile/theme/theme_provider.dart';
 
@@ -85,7 +84,7 @@ class _LoginScreenState extends State<InputBorderWidget> {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if(StringUtils.isNotNullOrEmpty(widget.label)) ... [
+            if(widget.label?.isNotEmpty == true) ... [
               Text(
                 widget.label!,
                 style: Theme.of(context).textTheme.bodyMedium!,
@@ -131,7 +130,7 @@ class _LoginScreenState extends State<InputBorderWidget> {
                 ),
                 fillColor: widget.enabled ? widget.palette.inputFillColor(1.0) : widget.palette.disableInputColor(1.0),
                 filled: true,
-                suffix: StringUtils.isNotNullOrEmpty(widget.suffix) ? Text(
+                suffix: widget.suffix?.isNotEmpty == true ? Text(
                   widget.suffix!,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: widget.palette.textColor(1.0),
