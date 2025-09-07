@@ -1,4 +1,4 @@
-package com.example.upward_mobile
+package com.globodai.upward_mobile
 
 import io.flutter.embedding.android.FlutterActivity
 

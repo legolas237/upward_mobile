@@ -1,0 +1,30 @@
+{
+  "helloWorld": "Hello Guys",
+  "@helloWorld": {
+    "description": "The conventional newborn programmer greeting"
+  },
+  "next": "I continue",
+  "@next": {
+    "description": ""
+  },
+  "onboardingTitle": "Simplify your daily life by organizing your activities with ease.",
+  "@onboardingTitle": {
+    "description": ""
+  },
+  "setYourPreferredLanguage": "Select your preferred language",
+  "@setYourPreferredLanguage": {
+    "description": ""
+  },
+  "whatIsYourName": "What can we call you?",
+  "@whatIsYourName": {
+    "description": ""
+  },
+  "fullName": "Last & First Name(s)",
+  "@fullName": {
+    "description": ""
+  },
+  "anErrorOccurred": "Unable to continue. An error has occurred.",
+  "@anErrorOccurred": {
+    "description": ""
+  }
+}
