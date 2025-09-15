@@ -1,17 +1,17 @@
-part of 'localization_cubit.dart';
+part of 'localization_viewmodel.dart';
 
 @immutable
-class LocalizationState extends Equatable {
-  const LocalizationState({
+class LocalizationModel extends Equatable {
+  const LocalizationModel({
     required this.language,
   });
 
   final String language;
 
-  LocalizationState change({
+  LocalizationModel change({
     required String language,
   }) {
-    return LocalizationState(
+    return LocalizationModel(
       language: language,
     );
   }

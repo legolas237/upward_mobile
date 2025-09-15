@@ -28,7 +28,7 @@ class SpinnerWidget extends StatelessWidget {
       backgroundColor: backgroundColor,
       strokeWidth: strokeWidth,
       valueColor: colors ?? AlwaysStoppedAnimation<Color>(
-        palette.primaryColor(1.0),
+        palette.isDark ? palette.secondaryColor(1.0) : palette.primaryColor(1.0),
       ),
     );
   }

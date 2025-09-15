@@ -25,6 +25,7 @@ class ScaffoldWidget extends StatelessWidget {
     this.resizeToAvoidBottomInset = true,
     this.floatingActionButton,
     this.titleSpacing,
+    this.titleColor,
   });
 
   late Palette palette;
@@ -33,6 +34,7 @@ class ScaffoldWidget extends StatelessWidget {
   final dynamic title;
   final bool useAppBar;
   final bool centerTitle;
+  final Color? titleColor;
   final List<Widget> actions;
   final Widget? leading;
   final bool automaticallyImplyLeading;
@@ -94,17 +96,25 @@ class ScaffoldWidget extends StatelessWidget {
         centerTitle: centerTitle,
         leading: leading,
         actions: actions,
-        title: Text(
-          title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.bodyMedium!.merge(
-            TextStyle(
-              fontSize: Constants.appBarTitle,
-              color: palette.textColor(1.0),
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+        title: Builder(
+          builder: (context) {
+            if(title is String) {
+              return Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodyMedium!.merge(
+                  TextStyle(
+                    fontSize: Constants.appBarTitle,
+                    color: titleColor ?? palette.textColor(1.0),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              );
+            }
+
+            return title ?? const SizedBox();
+          },
         ),
       );
     }

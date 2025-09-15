@@ -13,6 +13,7 @@ class AppBarActionWidget extends StatelessWidget {
     this.overlayColor,
     this.color,
     this.backgroundColor,
+    this.size,
   });
 
   late Palette palette;
@@ -20,6 +21,7 @@ class AppBarActionWidget extends StatelessWidget {
   final IconData icon;
   final Color? color;
   final Color? backgroundColor;
+  final double? size;
   final Color? overlayColor;
 
   final VoidCallback? onPressed;
@@ -44,7 +46,7 @@ class AppBarActionWidget extends StatelessWidget {
         icon: Icon(
           icon,
           color: color,
-          size: Constants.iconSize,
+          size: size ?? Constants.iconSize,
         ),
         iconSize: Constants.iconSize,
         highlightColor: overlayColor ?? palette.overlayLightColor(1.0),

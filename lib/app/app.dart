@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
 import 'package:upward_mobile/l10n/app_localizations.dart' show AppLocalizations;
-import 'package:upward_mobile/blocs/theme/theme_cubit.dart';
 import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/routes/route_generator.dart';
 import 'package:upward_mobile/screens/splash_screen/splash_screen.dart';
 import 'package:upward_mobile/theme/app_theme.dart';
 import 'package:upward_mobile/theme/theme_provider.dart';
-import 'package:upward_mobile/blocs/localization/localization_cubit.dart';
+import 'package:upward_mobile/viewmodels/localization/localization_viewmodel.dart';
+import 'package:upward_mobile/viewmodels/theme/theme_viewmodel.dart';
 
 // ignore: must_be_immutable
 class UpwardApp extends StatefulWidget {
@@ -31,7 +31,7 @@ class _UpwardAppState extends State<UpwardApp> with WidgetsBindingObserver, Sing
   void didChangePlatformBrightness() {
     var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
 
-    BlocProvider.of<ThemeCubit>(context).themeChanged(
+    BlocProvider.of<ThemeViewmodel>(context).themeChanged(
       brightness == Brightness.dark ? ThemeStatusEnum.dark : ThemeStatusEnum.light,
     );
   }
@@ -50,8 +50,8 @@ class _UpwardAppState extends State<UpwardApp> with WidgetsBindingObserver, Sing
 
   @override
   Widget build(BuildContext context) {
-    var localizationCubit = BlocProvider.of<LocalizationCubit>(context, listen: true,);
-    var themeCubit = BlocProvider.of<ThemeCubit>(context, listen: true,);
+    var localizationCubit = BlocProvider.of<LocalizationViewmodel>(context, listen: true,);
+    var themeCubit = BlocProvider.of<ThemeViewmodel>(context, listen: true,);
     AppTheme theme = AppTheme(
       isDark: themeCubit.state.status == ThemeStatusEnum.dark,
     );
@@ -61,6 +61,7 @@ class _UpwardAppState extends State<UpwardApp> with WidgetsBindingObserver, Sing
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: Constants.appName,
+        navigatorKey: RouteGenerator.navigatorKey,
         // Theme
         theme: theme.defaultTheme(context),
         darkTheme: theme.defaultTheme(context),

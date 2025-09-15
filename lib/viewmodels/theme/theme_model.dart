@@ -1,18 +1,18 @@
-part of 'theme_cubit.dart';
+part of 'theme_viewmodel.dart';
 
 enum ThemeStatusEnum { light, dark }
 
-class ThemeState extends Equatable {
-  const ThemeState({
+class ThemeModel extends Equatable {
+  const ThemeModel({
     this.status = ThemeStatusEnum.dark,
   });
 
   final ThemeStatusEnum? status;
 
-  ThemeState change({
+  ThemeModel change({
     required ThemeStatusEnum status,
   }) {
-    return ThemeState(
+    return ThemeModel(
       status: status,
     );
   }

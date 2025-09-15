@@ -8,8 +8,8 @@ import 'package:upward_mobile/services/user_service.dart';
 class UserRepository {
   final UserService _provider = UserService();
 
-  Future<User?> user() async {
-    return await _provider.user();
+  User? user() {
+    return _provider.user();
   }
 
   Future<void> auth(User user) async {

@@ -11,7 +11,7 @@ class Palette {
   static const Color white = Color(0xFFFFFFFF);
   static const Color primary = Color(0xFF4F4762);
   static const Color primaryOverlayColor = Color(0xFF6B6280);
-  static const Color secondary = Color(0xFF4F4762);
+  static const Color secondaryOverlayColor = Color(0xFFCAC7D6);
 
   final Map _colors = {
     'light': {
@@ -19,7 +19,7 @@ class Palette {
       "primary": primary,
       "black": black,
       "white": white,
-      "secondary": secondary,
+      "secondary": Color(0xFF4F4762),
       "scaffold": white,
       "icon": black,
       "input_fill": white,
@@ -29,30 +29,48 @@ class Palette {
       "disable_input": Color(0xFFFAFAFA),
       "input_border": Color(0xFFE8E6E6),
       "hint": Color(0xFF8696a0),
-      "surface": Color(0xFFEFEFEF),
-      "overlay_light": const Color(0xFFFAFAFA),
+      "surface": Color(0xFFF1F0F6),
+      "overlay_light": const Color(0xFFEFEFEF),
       "overlay_high_light": const Color(0xFFF1F1F1),
+      "button_color": Color(0xFF4F4762),
+      "button_color_overlay": primaryOverlayColor,
+      "button_text_color": white,
     },
     'dark': {
       "caption": caption,
       "primary": primary,
       "black": black,
       "white": white,
-      "secondary": secondary,
+      "secondary": Color(0xFFDBD8E3),
       "scaffold": Color(0xFF2A2438),
       "icon": white,
       "input_fill": Color(0xFF2A2438),
       "text": white,
       "primary_overlay": primaryOverlayColor,
-      "annotation": Color(0xFF2C263B), // 0xFF2F283D
+      "annotation": Color(0xFF2D273D),
       "disable_input": Color(0xFF2A2438),
       "input_border": Color(0xFF373047),
       "hint": Color(0xFF8696a0),
-      "surface": Color(0xFF352E46),
+      "surface": Color(0xFF332C44),
       "overlay_light": const Color(0xFF403950),
       "overlay_high_light": const Color(0xFF403950),
+      "button_color": Color(0xFFDBD8E3),
+      "button_color_overlay": secondaryOverlayColor,
+      "button_text_color": Color(0xFF2A2438),
     },
   };
+
+  Color buttonTexTColor(double opacity) {
+    return _getColor('button_text_color').withValues(alpha: opacity);
+  }
+
+  Color buttonOverlayColor(double opacity) {
+    return _getColor('button_color_overlay').withValues(alpha: opacity);
+  }
+
+  Color buttonColor(double opacity) {
+    return _getColor('button_color').withValues(alpha: opacity);
+  }
 
   Color overHighLightColor(double opacity) {
     return _getColor('overlay_high_light').withValues(alpha: opacity);

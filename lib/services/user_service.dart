@@ -8,7 +8,7 @@ import 'package:upward_mobile/models/user.dart';
 class UserService {
   const UserService();
 
-  Future<User?> user() async {
+  User? user() {
     var hiveBox = Hive.box(Constants.userTable);
 
     // Finally ..
@@ -16,7 +16,7 @@ class UserService {
       return null;
     }
 
-    return await hiveBox.getAt(Constants.userHiveAdapterId);
+    return hiveBox.get(Constants.userHiveAdapterId);
   }
 
   Future<void> auth(User user) async {

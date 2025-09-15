@@ -107,14 +107,14 @@ abstract class AppLocalizations {
   ///
   ///
   /// In en, this message translates to:
-  /// **'I continue'**
-  String get next;
+  /// **'Hello !'**
+  String get hello;
 
   ///
   ///
   /// In en, this message translates to:
-  /// **'Simplify your daily life by organizing your activities with ease.'**
-  String get onboardingTitle;
+  /// **'I continue'**
+  String get next;
 
   ///
   ///
@@ -125,13 +125,13 @@ abstract class AppLocalizations {
   ///
   ///
   /// In en, this message translates to:
-  /// **'What can we call you?'**
+  /// **'To continue, please enter your name.'**
   String get whatIsYourName;
 
   ///
   ///
   /// In en, this message translates to:
-  /// **'Last & First Name(s)'**
+  /// **'First & Last name(s)'**
   String get fullName;
 
   ///
@@ -139,6 +139,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unable to continue. An error has occurred.'**
   String get anErrorOccurred;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Free yourself from chaos. Organize your tasks, live with peace of mind.'**
+  String get onboardingTitle;
+
+  /// No description provided for @startToWrite.
+  ///
+  /// In en, this message translates to:
+  /// **'Start writing'**
+  String get startToWrite;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'This information helps us provide you with an even better experience.'**
+  String get whyEnterName;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Add a new task'**
+  String get addTask;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Oops Error!'**
+  String get error;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s empty around here'**
+  String get isEmptyAroundHere;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'To start organizing, add tasks to your board'**
+  String get emptyTasks;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Unclassified'**
+  String get unclassified;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get completed;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Not complete'**
+  String get uncompleted;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Partially complete'**
+  String get partiallyCompleted;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Enter title'**
+  String get title;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Task description'**
+  String get taskContent;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Continue writing'**
+  String get continueWriting;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Enter item'**
+  String get enterCheckListDescription;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Saving ...'**
+  String get saving;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allTasks;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Take a photo'**
+  String get takeOnePicture;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Choose from gallery'**
+  String get chooseIntoGallery;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Change the activity status'**
+  String get changeStatus;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get status;
+
+  ///
+  ///
+  /// In en, this message translates to:
+  /// **'Authorization required to\naccess the microphone'**
+  String get permanentlyDenied;
 }
 
 class _AppLocalizationsDelegate

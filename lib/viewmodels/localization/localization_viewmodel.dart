@@ -5,11 +5,11 @@ import 'package:hive/hive.dart';
 
 import 'package:upward_mobile/utilities/config.dart';
 
-part 'localization_state.dart';
+part 'localization_model.dart';
 
-class LocalizationCubit extends Cubit<LocalizationState> {
-  LocalizationCubit() : super(
-    LocalizationState(
+class LocalizationViewmodel extends Cubit<LocalizationModel> {
+  LocalizationViewmodel() : super(
+    LocalizationModel(
       language: Hive.box(Constants.upwardTable).get(
         Constants.localeColumn,
       ) as String? ?? Constants.defaultLocale,

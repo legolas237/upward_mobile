@@ -9,8 +9,7 @@ class BaseInkWellWidget extends StatelessWidget {
     super.key,
     required this.child,
     this.callback,
-    this.highLightColor,
-    this.splashLightColor,
+    this.overlayColor,
     this.tileColor,
     this.onLongPress,
     this.borderRadius,
@@ -20,9 +19,8 @@ class BaseInkWellWidget extends StatelessWidget {
   late Palette palette;
 
   final Widget child;
-  final Color? splashLightColor;
+  final Color? overlayColor;
   final dynamic borderRadius;
-  final Color? highLightColor;
   final Color? tileColor;
   final VoidCallback? callback;
   final GestureLongPressCallback? onLongPress;
@@ -39,9 +37,9 @@ class BaseInkWellWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: borderRadius ?? BorderRadius.zero,
         child: InkWell(
-          splashColor: splashLightColor ?? palette.overlayLightColor(1.0),
-          highlightColor: highLightColor ?? palette.overlayLightColor(1.0),
-          hoverColor: highLightColor ?? palette.overlayLightColor(1.0),
+          splashColor: overlayColor ?? palette.overlayLightColor(1.0),
+          highlightColor: overlayColor ?? palette.overlayLightColor(1.0),
+          hoverColor: overlayColor ?? palette.overlayLightColor(1.0),
           borderRadius: borderRadius ?? BorderRadius.zero,
           onLongPress: () {
             if (onLongPress != null) {

@@ -8,12 +8,15 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:async';
 
 import 'package:upward_mobile/app/app.dart';
-import 'package:upward_mobile/blocs/localization/localization_cubit.dart';
-import 'package:upward_mobile/blocs/theme/theme_cubit.dart';
+import 'package:upward_mobile/repositories/task_repository.dart';
+import 'package:upward_mobile/repositories/user_repository.dart';
 import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/models/user.dart';
-import 'package:upward_mobile/observers/app_bloc_observer.dart';
+import 'package:upward_mobile/utilities/app_bloc_observer.dart';
 import 'package:upward_mobile/utilities/hooks.dart';
+import 'package:upward_mobile/viewmodels/localization/localization_viewmodel.dart';
+import 'package:upward_mobile/viewmodels/tasks/tasks_viewmodel.dart';
+import 'package:upward_mobile/viewmodels/theme/theme_viewmodel.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,19 +56,31 @@ class _MainAppState extends State<MainApp> {
     // Check brightness
     var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
 
-    return MultiBlocProvider(
+    return MultiRepositoryProvider(
       providers: [
-        BlocProvider<LocalizationCubit>(
-          lazy: false,
-          create: (BuildContext context) => LocalizationCubit(),
-        ),
-        BlocProvider<ThemeCubit>(
-          create: (BuildContext context) => ThemeCubit(
-            brightness == Brightness.dark ? ThemeStatusEnum.dark : ThemeStatusEnum.light,
-          ),
+        RepositoryProvider<UserRepository>(
+          create: (BuildContext context) => UserRepository(),
         ),
       ],
-      child: UpwardApp(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<LocalizationViewmodel>(
+            lazy: false,
+            create: (BuildContext context) => LocalizationViewmodel(),
+          ),
+          BlocProvider<ThemeViewmodel>(
+            create: (BuildContext context) => ThemeViewmodel(
+              brightness == Brightness.dark ? ThemeStatusEnum.dark : ThemeStatusEnum.light,
+            ),
+          ),
+          BlocProvider<TasksViewmodel>(
+            create: (context) => TasksViewmodel(
+              repository: TaskRepository(),
+            ),
+          ),
+        ],
+        child: UpwardApp(),
+      ),
     );
   }
 }

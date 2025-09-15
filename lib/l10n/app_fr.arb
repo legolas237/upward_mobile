@@ -3,11 +3,15 @@
   "@helloWorld": {
     "description": "The conventional newborn programmer greeting"
   },
+  "hello": "Bonjour !",
+  "@hello": {
+    "description": ""
+  },
   "next": "Je continue",
   "@next": {
     "description": ""
   },
-  "onboardingTitle": "Simplifiez votre quotidien en organisant vos activités en toute simplicité.",
+  "onboardingTitle": "Libérez-vous du chaos. Organisez vos tâches, vivez l'esprit léger.",
   "@onboardingTitle": {
     "description": ""
   },
@@ -15,16 +19,104 @@
   "@setYourPreferredLanguage": {
     "description": ""
   },
-  "whatIsYourName": "Comment pouvons-nous vous appeler?",
+  "whatIsYourName": "Pour continuer, veuillez saisir votre nom.",
   "@whatIsYourName": {
     "description": ""
   },
-  "fullName": "Nom(s) & Prénom(s)",
+  "fullName": "Prénom(s) & Nom(s)",
   "@fullName": {
     "description": ""
   },
   "anErrorOccurred": "Impossible de continuer. Une erreur est survenue.",
   "@anErrorOccurred": {
+    "description": ""
+  },
+  "startToWrite": "Commencer à écrire",
+  "@start": {
+    "description": ""
+  },
+  "whyEnterName": "Cette information nous permet de vous proposer une expérience encore meilleure.",
+  "@whyEnterName": {
+    "description": ""
+  },
+  "addTask": "Nouvelle tâche",
+  "@addTask": {
+    "description": ""
+  },
+  "error": "Oups Error!",
+  "@error": {
+    "description": ""
+  },
+  "isEmptyAroundHere": "C'est vide par ici",
+  "@isEmptyAroundHere": {
+    "description": ""
+  },
+  "emptyTasks": "Pour commencer à organiser, ajouter des tâches à votre tablea",
+  "@emptyTasks": {
+    "description": ""
+  },
+  "unclassified": "Non classées",
+  "@unclassified": {
+    "description": ""
+  },
+  "completed": "Complètes",
+  "@completed": {
+    "description": ""
+  },
+  "uncompleted": "Non complètes",
+  "@uncompleted": {
+    "description": ""
+  },
+  "partiallyCompleted": "Part ... complètes",
+  "@partiallyCompleted": {
+    "description": ""
+  },
+  "title": "Le titre",
+  "@title": {
+    "description": ""
+  },
+  "taskContent": "Description de la tâche",
+  "@taskContent": {
+    "description": ""
+  },
+  "continueWriting": "Continuer à écrire",
+  "@continueWriting": {
+    "description": ""
+  },
+  "enterCheckListDescription": "Saisir l'élément",
+  "@enterCheckListDescription": {
+    "description": ""
+  },
+  "saving": "Enregistrement ...",
+  "@saving": {
+    "description": ""
+  },
+  "retry": "Réessayer",
+  "@retry": {
+    "description": ""
+  },
+  "allTasks": "Toutes",
+  "@allTasks": {
+    "description": ""
+  },
+  "takeOnePicture": "Prendre une photo",
+  "@takeOnePicture": {
+    "description": ""
+  },
+  "chooseIntoGallery": "Choisir dans la galerie",
+  "@chooseIntoGallery": {
+    "description": ""
+  },
+  "changeStatus": "Changer le statut de l'activité",
+  "@changeStatus": {
+    "description": ""
+  },
+  "status": "Statut",
+  "@status": {
+    "description": ""
+  },
+  "permanentlyDenied": "Autorisation requise pour\naccéder au micro",
+  "@permanentlyDenied": {
     "description": ""
   }
 }

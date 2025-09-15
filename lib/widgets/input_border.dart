@@ -28,23 +28,35 @@ class InputBorderWidget extends StatefulWidget {
     this.suffix,
     this.minLines = 1,
     this.fontSize,
+    this.withBorder = true,
+    this.autoFocus = false,
+    this.contentPadding,
     this.inputFormatters = const [],
+    this.floatingLabelBehavior = FloatingLabelBehavior.always,
+    this.fontWeight,
+    this.showHint = true,
   });
   
   late Palette palette;
 
+  final bool autoFocus;
   final bool enabled;
+  final bool withBorder;
   final String placeHolder;
   final String? label;
   final bool obscureText;
   final int minLines;
   final String? suffix;
   final double? fontSize;
+  final bool? showHint;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
   List<TextInputFormatter>? inputFormatters;
   final TextEditingController? controller;
   final Function(String)? onChanged;
+  final EdgeInsetsGeometry? contentPadding;
+  final FloatingLabelBehavior? floatingLabelBehavior;
+  final FontWeight? fontWeight;
 
   @override
   State<StatefulWidget> createState() => _LoginScreenState();
@@ -95,6 +107,7 @@ class _LoginScreenState extends State<InputBorderWidget> {
               controller: widget.controller,
               focusNode: _focusNode,
               enableSuggestions: false,
+              autofocus: widget.autoFocus,
               obscureText: widget.obscureText,
               enabled: widget.enabled,
               onChanged: widget.onChanged,
@@ -105,28 +118,32 @@ class _LoginScreenState extends State<InputBorderWidget> {
               style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                 color: widget.enabled ? widget.palette.textColor(1.0) : widget.palette.captionColor(1.0),
                 fontSize: widget.fontSize ?? 16.0,
-                fontWeight: FontWeight.w500,
+                fontWeight: widget.fontWeight ?? FontWeight.w400,
               ),
               decoration: InputDecoration(
+                floatingLabelBehavior: widget.floatingLabelBehavior,
                 labelText: widget.placeHolder,
-                contentPadding: const EdgeInsets.symmetric(
+                hintText: widget.showHint == false ? null : widget.placeHolder,
+                contentPadding: widget.contentPadding ?? const EdgeInsets.symmetric(
                   horizontal: 16.0,
                   vertical: 16.0,
                 ),
                 floatingLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                  color: hasFocus ? widget.palette.textColor(1.0) : widget.palette.hintColor(1.0),
-                  fontSize: hasFocus ? 18.0 : 16.0,
-                  fontWeight: FontWeight.w600,
+                  color: hasFocus
+                      ? (widget.palette.isDark ? widget.palette.textColor(1.0) : widget.palette.primaryColor(1.0))
+                      : widget.palette.hintColor(1.0),
+                  fontSize: hasFocus ? 18.0 : (widget.fontSize ?? 16.0),
+                  fontWeight: widget.fontWeight ?? FontWeight.w400,
                 ),
                 labelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: widget.palette.hintColor(1.0),
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w600,
+                  fontSize: widget.fontSize ?? 15.0,
+                  fontWeight: widget.fontWeight ?? FontWeight.w400,
                 ),
                 hintStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
                   color: widget.palette.hintColor(1.0),
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w600,
+                  fontSize: widget.fontSize ?? 15.0,
+                  fontWeight: widget.fontWeight ?? FontWeight.w400,
                 ),
                 fillColor: widget.enabled ? widget.palette.inputFillColor(1.0) : widget.palette.disableInputColor(1.0),
                 filled: true,
@@ -134,11 +151,11 @@ class _LoginScreenState extends State<InputBorderWidget> {
                   widget.suffix!,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                     color: widget.palette.textColor(1.0),
-                    fontSize: 15.0,
+                    fontSize: widget.fontSize ?? 15.0,
                     fontWeight: FontWeight.w700,
                   ),
                 ) : null,
-                enabledBorder: OutlineInputBorder(
+                enabledBorder: widget.withBorder ? OutlineInputBorder(
                   borderSide: BorderSide(
                     color: widget.palette.inputBorderColor(1.0) ,
                     width: borderWidth,
@@ -146,8 +163,8 @@ class _LoginScreenState extends State<InputBorderWidget> {
                   borderRadius: const BorderRadius.all(
                     Radius.circular(Constants.buttonRadius),
                   ),
-                ),
-                disabledBorder: OutlineInputBorder(
+                ) : InputBorder.none,
+                disabledBorder: widget.withBorder ? OutlineInputBorder(
                   borderSide: BorderSide(
                     color: widget.palette.inputBorderColor(0.6) ,
                     width: borderWidth,
@@ -155,8 +172,8 @@ class _LoginScreenState extends State<InputBorderWidget> {
                   borderRadius: const BorderRadius.all(
                     Radius.circular(Constants.buttonRadius),
                   ),
-                ),
-                border: OutlineInputBorder(
+                ) : InputBorder.none,
+                border: widget.withBorder ? OutlineInputBorder(
                   borderSide: BorderSide(
                     color: widget.palette.inputBorderColor(1.0) ,
                     width: borderWidth,
@@ -164,8 +181,8 @@ class _LoginScreenState extends State<InputBorderWidget> {
                   borderRadius: const BorderRadius.all(
                     Radius.circular(Constants.buttonRadius),
                   ),
-                ), // Applies the
-                focusedBorder: OutlineInputBorder(
+                ) : InputBorder.none, // Applies the
+                focusedBorder: widget.withBorder ? OutlineInputBorder(
                   borderSide: BorderSide(
                     color: widget.palette.primaryColor(1.0) ,
                     width: borderWidth,
@@ -173,8 +190,8 @@ class _LoginScreenState extends State<InputBorderWidget> {
                   borderRadius: const BorderRadius.all(
                     Radius.circular(Constants.buttonRadius),
                   ),
-                ),
-                errorBorder: OutlineInputBorder(
+                ) : InputBorder.none,
+                errorBorder: widget.withBorder ? OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Theme.of(context).colorScheme.error,
                     width: borderWidth,
@@ -182,7 +199,7 @@ class _LoginScreenState extends State<InputBorderWidget> {
                   borderRadius: const BorderRadius.all(
                     Radius.circular(Constants.buttonRadius),
                   ),
-                ),
+                ) : InputBorder.none,
                 suffixIcon: widget.suffixIcon,
               ),
             ),

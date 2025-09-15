@@ -12,22 +12,93 @@ class AppLocalizationsFr extends AppLocalizations {
   String get helloWorld => 'Bonjour les gars';
 
   @override
-  String get next => 'Je continue';
+  String get hello => 'Bonjour !';
 
   @override
-  String get onboardingTitle =>
-      'Simplifiez votre quotidien en organisant vos activités en toute simplicité.';
+  String get next => 'Je continue';
 
   @override
   String get setYourPreferredLanguage => 'Choisir votre langue préférée';
 
   @override
-  String get whatIsYourName => 'Comment pouvons-nous vous appeler?';
+  String get whatIsYourName => 'Pour continuer, veuillez saisir votre nom.';
 
   @override
-  String get fullName => 'Nom(s) & Prénom(s)';
+  String get fullName => 'Prénom(s) & Nom(s)';
 
   @override
   String get anErrorOccurred =>
       'Impossible de continuer. Une erreur est survenue.';
+
+  @override
+  String get onboardingTitle =>
+      'Libérez-vous du chaos. Organisez vos tâches, vivez l\'esprit léger.';
+
+  @override
+  String get startToWrite => 'Commencer à écrire';
+
+  @override
+  String get whyEnterName =>
+      'Cette information nous permet de vous proposer une expérience encore meilleure.';
+
+  @override
+  String get addTask => 'Nouvelle tâche';
+
+  @override
+  String get error => 'Oups Error!';
+
+  @override
+  String get isEmptyAroundHere => 'C\'est vide par ici';
+
+  @override
+  String get emptyTasks =>
+      'Pour commencer à organiser, ajouter des tâches à votre tablea';
+
+  @override
+  String get unclassified => 'Non classées';
+
+  @override
+  String get completed => 'Complètes';
+
+  @override
+  String get uncompleted => 'Non complètes';
+
+  @override
+  String get partiallyCompleted => 'Part ... complètes';
+
+  @override
+  String get title => 'Le titre';
+
+  @override
+  String get taskContent => 'Description de la tâche';
+
+  @override
+  String get continueWriting => 'Continuer à écrire';
+
+  @override
+  String get enterCheckListDescription => 'Saisir l\'élément';
+
+  @override
+  String get saving => 'Enregistrement ...';
+
+  @override
+  String get retry => 'Réessayer';
+
+  @override
+  String get allTasks => 'Toutes';
+
+  @override
+  String get takeOnePicture => 'Prendre une photo';
+
+  @override
+  String get chooseIntoGallery => 'Choisir dans la galerie';
+
+  @override
+  String get changeStatus => 'Changer le statut de l\'activité';
+
+  @override
+  String get status => 'Statut';
+
+  @override
+  String get permanentlyDenied => 'Autorisation requise pour\naccéder au micro';
 }

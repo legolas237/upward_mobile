@@ -5,19 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:upward_mobile/models/user.dart';
 import 'package:upward_mobile/repositories/user_repository.dart';
 
-part 'onboarding_event.dart';
-part 'onboarding_state.dart';
+part 'onboarding_model.dart';
 
-class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
-  OnboardingBloc() : super(const OnboardingState()) {
+class OnboardingViewmodel extends Cubit<OnboardingModel> {
+  OnboardingViewmodel({
+    required UserRepository repository,
+  }) : _repository = repository, super(OnboardingModel());
 
-    // Init events emission ...
-    on<EnrollUser>(_onEnrollUser);
-  }
+  final UserRepository _repository;
 
-  final UserRepository _repository = UserRepository();
-
-  Future<void> _onEnrollUser(EnrollUser event, Emitter<OnboardingState> emit,) async {
+  Future<void> enrollUser(String name) async {
     emit(state.copyWith(
       status: OnboardingStatus.processing,
     ));
@@ -27,7 +24,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
 
     try {
       // Create user
-      final user = User(name: event.name);
+      final user = User(name: name);
 
       // Store user
       await _repository.auth(user);

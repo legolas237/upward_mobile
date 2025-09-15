@@ -64,7 +64,7 @@ class ButtonWidget extends StatelessWidget {
         style: const ButtonStyle().copyWith(
           elevation: WidgetStateProperty.all(0.0),
           overlayColor: WidgetStateProperty.resolveWith((states) {
-            return overlayColor ?? palette.primaryOverlay(1.0);
+            return overlayColor ?? palette.buttonOverlayColor(1.0);
           }),
           padding: WidgetStateProperty.resolveWith((states) {
             return padding ?? EdgeInsets.only(
@@ -74,7 +74,7 @@ class ButtonWidget extends StatelessWidget {
             );
           }),
           backgroundColor: WidgetStateProperty.resolveWith((states) {
-            return backgroundColor ?? (enabledButton ? palette.primaryColor(1.0) : palette.primaryColor(0.4));
+            return backgroundColor ?? (enabledButton ? palette.buttonColor(1.0) : palette.buttonColor(palette.isDark ? 0.2 : 0.1));
           }),
           shape: WidgetStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
@@ -128,10 +128,8 @@ class ButtonWidget extends StatelessWidget {
         style: Theme.of(context).textTheme.bodyMedium!.merge(
           TextStyle(
             fontSize: fontSize ?? 16.0,
-            fontWeight: FontWeight.w700,
-            color: enabledButton
-                ? textColor ?? palette.whiteColor(1.0)
-                : palette.captionColor(0.6),
+            fontWeight: FontWeight.w800,
+            color: textColor ?? palette.buttonTexTColor(1.0),
           ),
         ),
       );
@@ -144,7 +142,7 @@ class ButtonWidget extends StatelessWidget {
         Icon(
           icon,
           size: iconSize ?? 18.0,
-          color: enabledButton ? textColor ?? palette.whiteColor(1.0) : palette.captionColor(
+          color: enabledButton ? textColor ?? palette.buttonTexTColor(1.0) : palette.captionColor(
             palette.isDark ? 1.0 : 1.0,
           ),
         ),
@@ -157,8 +155,8 @@ class ButtonWidget extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium!.merge(
               TextStyle(
                 fontSize: fontSize ?? 16.0,
-                fontWeight: FontWeight.w600,
-                color: enabledButton ? textColor ?? palette.whiteColor(1.0): palette.captionColor(
+                fontWeight: FontWeight.w800,
+                color: enabledButton ? textColor ?? palette.buttonTexTColor(1.0): palette.captionColor(
                   palette.isDark ? 1.0 : 1.0,
                 ),
               ),
@@ -166,81 +164,6 @@ class ButtonWidget extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-// ignore: must_be_immutable
-class IconButtonWidget extends StatelessWidget {
-  IconButtonWidget({
-    super.key,
-    required this.icon,
-    this.size = 30.0,
-    this.backgroundColor,
-    this.overlayColor,
-    this.iconSize,
-    this.iconColor,
-    this.callback,
-    this.oval = true,
-    this.borderColor,
-    this.enabled = true,
-    this.withBorder = false,
-    this.innerPadding = EdgeInsets.zero,
-  });
-
-  late Palette palette;
-
-  final bool oval;
-  final bool withBorder;
-  final bool enabled;
-  final IconData icon;
-  final double? size;
-  final double? iconSize;
-  final Color? backgroundColor;
-  final Color? iconColor;
-  final Color? overlayColor;
-  final Color? borderColor;
-  final EdgeInsets? innerPadding;
-  final VoidCallback? callback;
-
-  @override
-  Widget build(BuildContext context) {
-    // Get theme palette
-    palette = ThemeProvider.of(context)!.theme.palette;
-
-    return Material(
-      color: backgroundColor ?? palette.primaryColor(1.0), // Button color
-      borderRadius: !oval ? BorderRadius.circular(Constants.buttonRadius) : BorderRadius.circular(size!),
-      child: Ink(
-        decoration: BoxDecoration(
-          border: withBorder ? Border.all(
-            width: 1.0,
-            color: borderColor ?? palette.inputBorderColor(0.8),
-          ) : null,
-          borderRadius: !oval ? BorderRadius.circular(Constants.buttonRadius) : BorderRadius.circular(size!),
-        ),
-        child: InkWell(
-          borderRadius: !oval ? BorderRadius.circular(Constants.buttonRadius) : BorderRadius.circular(size!),
-          splashColor: overlayColor ?? palette.primaryOverlay(1.0),
-          highlightColor: overlayColor ?? palette.primaryOverlay(1.0),
-          onTap: () {
-            if(enabled) callback?.call();
-          },
-          child: Container(
-            width: size,
-            height: size,
-            alignment: Alignment.center,
-            child: Padding(
-              padding: innerPadding!,
-              child: Icon(
-                icon,
-                size: iconSize ?? 20.0,
-                color: iconColor,
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
