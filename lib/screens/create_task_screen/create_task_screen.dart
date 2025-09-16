@@ -251,13 +251,14 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
                   ),
                 ),
                 if(_command?.key == Constants.microCommand) WaveRecordWidget(
-                  onSave: (file) {
+                  onSave: (duration, file) {
                     setState(() {
                       _command = null;
                       if(file != null) {
                         _task = _task.addTaskElement(TaskAttachment(
                           "${Hooks.generateRandomId()}_${_task.elements.length + 1}${DateTime.now().millisecondsSinceEpoch}",
                           file: file,
+                          duration: duration,
                           type: AttachmentType.vocal,
                         ));
                       }
@@ -485,7 +486,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
                   final isPlaying = _isPlaying && _currentRecord?.id == element.id;
 
                   return PlayRecordWidget(
-                    audioPlayer: _audioPlayer,
+                    taskAttachment: element,
                     isPlaying: isPlaying,
                     playOrStop: () {
                       if(isPlaying) _stopPlaying();

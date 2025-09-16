@@ -9,11 +9,13 @@ class IncrementalTimerWidget extends StatefulWidget {
   IncrementalTimerWidget({
     super.key,
     this.startRecording = false,
+    this.onDuration,
   });
 
   late Palette palette;
 
   final bool startRecording;
+  final Function(int)? onDuration;
 
   @override
   State<StatefulWidget> createState() => _IncrementalTimerWidget();
@@ -44,7 +46,7 @@ class _IncrementalTimerWidget extends State<IncrementalTimerWidget> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      Hooks.secondToSmartFormat(_seconds),
+      Hooks.durationToSmartFormat(_seconds),
       style: Theme.of(context).textTheme.bodyMedium,
     );
   }
@@ -52,9 +54,9 @@ class _IncrementalTimerWidget extends State<IncrementalTimerWidget> {
   void _startTimer() {
     if(widget.startRecording && _timer == null) {
       _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-        setState(() {
-          _seconds = _seconds + 1;
-        });
+        _seconds = _seconds + 1;
+        widget.onDuration?.call(_seconds);
+        setState(() => {});
       });
     } else {
       _timer?.cancel();

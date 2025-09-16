@@ -9,10 +9,6 @@ import 'package:upward_mobile/utilities/config.dart';
 
 @immutable
 abstract class Hooks {
-  static void setOrientation(List<DeviceOrientation> orientations) {
-    SystemChrome.setPreferredOrientations(orientations);
-  }
-
   static void removeFocus() {
     FocusManager.instance.primaryFocus?.unfocus();
   }
@@ -49,7 +45,7 @@ abstract class Hooks {
     ).join();
   }
 
-  static String secondToSmartFormat(int totalSeconds) {
+  static String durationToSmartFormat(int totalSeconds) {
     int minutes = totalSeconds ~/ 60;
     int seconds = totalSeconds % 60;
 

@@ -52,7 +52,9 @@ class _MainAppState extends State<MainApp> {
   @override
   Widget build(BuildContext context) {
     // Set orientation
-    Hooks.setOrientation([DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     // Check brightness
     var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
 

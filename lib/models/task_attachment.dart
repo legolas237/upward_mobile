@@ -33,10 +33,12 @@ class TaskAttachment extends TaskElement {
   const TaskAttachment(String id, {
     this.file,
     required this.type,
+    this.duration = 0,
   }) : super(key: typeKey, id: id);
 
   final File? file;
   final AttachmentType type;
+  final int duration;
 
   static const String typeKey = 'TaskAttachment';
 
@@ -66,6 +68,6 @@ class TaskAttachment extends TaskElement {
 
   @override
   List<Object?> get props {
-    return [...super.props, type, file, key];
+    return [...super.props, type, file, key, duration,];
   }
 }

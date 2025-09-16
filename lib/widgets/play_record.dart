@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:upward_mobile/models/task_attachment.dart';
 
 import 'package:upward_mobile/theme/palette.dart';
 import 'package:upward_mobile/theme/theme_provider.dart';
@@ -10,14 +11,14 @@ import 'package:upward_mobile/widgets/wave_record.dart';
 class PlayRecordWidget extends StatelessWidget {
   PlayRecordWidget({
     super.key,
-    required this.audioPlayer,
+    required this.taskAttachment,
     this.isPlaying = false,
     this.playOrStop,
   });
 
   late Palette palette;
 
-  final AudioPlayer audioPlayer;
+  final TaskAttachment taskAttachment;
   final bool isPlaying;
   final VoidCallback? playOrStop;
 
@@ -39,7 +40,7 @@ class PlayRecordWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 12.0),
             child: Text(
-              Hooks.secondToSmartFormat(audioPlayer.duration?.inSeconds ?? 0),
+              Hooks.durationToSmartFormat(taskAttachment.duration,),
               style: Theme.of(context).textTheme.labelMedium?.copyWith(
                 fontSize: 12.0,
               ),

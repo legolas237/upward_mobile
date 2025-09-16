@@ -24,7 +24,7 @@ class WaveRecordWidget extends StatefulWidget {
 
   late Palette palette;
 
-  final Function(File?)? onSave;
+  final Function(int, File?)? onSave;
 
   @override
   State<StatefulWidget> createState() => _WaveRecordWidgetState();
@@ -32,6 +32,7 @@ class WaveRecordWidget extends StatefulWidget {
 
 class _WaveRecordWidgetState extends State<WaveRecordWidget> {
   bool _isRecording = false;
+  int _duration = 0;
   late PermissionStatus? _permissionStatus;
   late final AudioRecorder _audioRecorder;
 
@@ -46,74 +47,6 @@ class _WaveRecordWidgetState extends State<WaveRecordWidget> {
   void dispose() {
     _audioRecorder.dispose();
     super.dispose();
-  }
-
-  Future<void> _startRecording() async {
-    try {
-      String filePath = await getApplicationDocumentsDirectory().then((value) {
-        return '${value.path}/${Hooks.generateRandomId()}${DateTime.now().millisecondsSinceEpoch}.wav';
-      });
-
-      await _audioRecorder.start(
-        const RecordConfig(
-          encoder: AudioEncoder.wav,
-        ),
-        path: filePath,
-      );
-    } catch (error, trace) {
-      debugPrint(error.toString());
-      debugPrint(trace.toString());
-    }
-  }
-
-  Future<void> _stopRecording() async {
-    try {
-      String? path = await _audioRecorder.stop();
-
-      widget.onSave?.call(File(path!));
-
-      setState(() {
-        _isRecording = false;
-      });
-      debugPrint('********* Record path: $path');
-    } catch (error, trace) {
-      debugPrint(error.toString());
-      debugPrint(trace.toString());
-    }
-  }
-
-  Future<void> _cancelRecord() async {
-    try {
-      if(_isRecording) {
-        await _audioRecorder.cancel();
-      }
-
-      widget.onSave?.call(null);
-    } catch (error, trace) {
-      debugPrint(error.toString());
-      debugPrint(trace.toString());
-    }
-  }
-
-  void _record() async {
-    if (_isRecording == false) {
-      _permissionStatus = await Permission.microphone.request();
-
-      if (_permissionStatus == PermissionStatus.granted) {
-        setState(() {
-          _isRecording = true;
-        });
-        await _startRecording();
-      } else if (_permissionStatus == PermissionStatus.permanentlyDenied) {
-        debugPrint('*********** Permission permanently denied');
-        setState(() => {});
-      }
-    } else {
-      await _stopRecording();
-      setState(() {
-        _isRecording = false;
-      });
-    }
   }
 
   @override
@@ -151,6 +84,9 @@ class _WaveRecordWidgetState extends State<WaveRecordWidget> {
                     children: [
                       IncrementalTimerWidget(
                         startRecording: _isRecording,
+                        onDuration: (duration) {
+                          _duration = duration;
+                        },
                       ),
                     ],
                   ),
@@ -211,6 +147,74 @@ class _WaveRecordWidgetState extends State<WaveRecordWidget> {
         ),
       ),
     );
+  }
+
+  Future<void> _startRecording() async {
+    try {
+      String filePath = await getApplicationDocumentsDirectory().then((value) {
+        return '${value.path}/${Hooks.generateRandomId()}${DateTime.now().millisecondsSinceEpoch}.wav';
+      });
+
+      await _audioRecorder.start(
+        const RecordConfig(
+          encoder: AudioEncoder.wav,
+        ),
+        path: filePath,
+      );
+    } catch (error, trace) {
+      debugPrint(error.toString());
+      debugPrint(trace.toString());
+    }
+  }
+
+  Future<void> _stopRecording() async {
+    try {
+      String? path = await _audioRecorder.stop();
+
+      widget.onSave?.call(_duration, File(path!));
+
+      setState(() {
+        _isRecording = false;
+      });
+      debugPrint('********* Record path: $path');
+    } catch (error, trace) {
+      debugPrint(error.toString());
+      debugPrint(trace.toString());
+    }
+  }
+
+  Future<void> _cancelRecord() async {
+    try {
+      if(_isRecording) {
+        await _audioRecorder.cancel();
+      }
+
+      widget.onSave?.call(_duration, null);
+    } catch (error, trace) {
+      debugPrint(error.toString());
+      debugPrint(trace.toString());
+    }
+  }
+
+  void _record() async {
+    if (_isRecording == false) {
+      _permissionStatus = await Permission.microphone.request();
+
+      if (_permissionStatus == PermissionStatus.granted) {
+        setState(() {
+          _isRecording = true;
+        });
+        await _startRecording();
+      } else if (_permissionStatus == PermissionStatus.permanentlyDenied) {
+        debugPrint('*********** Permission permanently denied');
+        setState(() => {});
+      }
+    } else {
+      await _stopRecording();
+      setState(() {
+        _isRecording = false;
+      });
+    }
   }
 }
 
