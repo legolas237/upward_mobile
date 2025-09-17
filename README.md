@@ -133,8 +133,8 @@ de l'interface utilisateur s'affichent correctement et interagissent comme atten
 
 <a name="difficultés"></a>
 ## 4. Difficultés & Solutions
-- La principale difficulté rencontrée a été la gestion des tests de composants (widgets), une tâche qui s'avére toujours chronophage. Compte tenu du temps
-  alloué pour la réalisation du projet, nous avons pu couvrir cette partie de manière partielle.
+- La principale difficulté a été la gestion des tests de composants (widgets), une tâche qui, à notre avis, est
+toujours chronophage. Compte tenu des échéances, nous n'avons pas pu couvrir cet aspect.
 - Suite à nos expérimentations, nous avons choisi de ne pas utiliser les packages `build_value` ou `freezed`. Bien qu'ils soient efficaces
   pour la sérialisation, leur complexité, notamment dans les fichiers `.g.dart` générés, ne correspondait pas à nos besoins. Notre objectif était de maintenir
   des fichiers de code généré simples et basiques. Nous avons donc opté pour `hive_annotation` et `build_runner` pour résoudre ce problème, car cette approche nous a permis
