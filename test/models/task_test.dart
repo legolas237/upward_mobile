@@ -1,50 +1,9 @@
 import 'package:test/test.dart';
-import 'package:faker/faker.dart';
-import 'package:flutter/material.dart';
 
 import 'package:upward_mobile/models/task.dart';
 import 'package:upward_mobile/models/task_check.dart';
-import 'package:upward_mobile/models/task_element.dart';
 import 'package:upward_mobile/models/task_text.dart';
 import 'package:upward_mobile/utilities/hooks.dart';
-import 'task_check_test.dart';
-import 'task_text_test.dart';
-
-@immutable
-class TaskTest {
-  static Task generateFake() {
-    final faker = Faker();
-
-    // Statuses
-    final statuses = TaskStatus.values.where((status) {
-      return status != TaskStatus.all;
-    }).toList();
-    statuses.shuffle();
-
-    // Date
-    final date = faker.date;
-
-    // Elements
-    final List<TaskElement> taskElements = [
-      ...List.filled(faker.randomGenerator.integer(5), TaskTextTest.generateFake(),),
-      ...List.filled(faker.randomGenerator.integer(5), TaskCheckTest.generateFake(),),
-    ];
-    Map<String, TaskElement> elements = {};
-    for(var item in taskElements) {
-      elements[item.id] = item;
-    }
-
-    return Task(
-      id: faker.guid.guid(),
-      title: faker.randomGenerator.string(20, min: 5),
-      content: faker.randomGenerator.string(120, min: 10),
-      status: statuses.first,
-      backgroundKey: null,
-      date: date.dateTime(),
-      elements: elements,
-    );
-  }
-}
 
 void main() {
   var task = Task(id: Hooks.generateRandomId());
