@@ -41,7 +41,6 @@ lib.
 +---repositories<br />
 +---routes<br />
 +---screens<br />
-+---services<br />
 +---theme<br />
 +---utilities<br />
 +---viewmodels<br />
