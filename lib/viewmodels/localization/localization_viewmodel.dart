@@ -7,6 +7,7 @@ import 'package:upward_mobile/utilities/config.dart';
 
 part 'localization_model.dart';
 
+/// Handle localization
 class LocalizationViewmodel extends Cubit<LocalizationModel> {
   LocalizationViewmodel() : super(
     LocalizationModel(

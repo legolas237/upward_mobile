@@ -152,7 +152,7 @@ class _WaveRecordWidgetState extends State<WaveRecordWidget> {
   Future<void> _startRecording() async {
     try {
       String filePath = await getApplicationDocumentsDirectory().then((value) {
-        return '${value.path}/${Hooks.generateRandomId()}${DateTime.now().millisecondsSinceEpoch}.wav';
+        return '${value.path}/${Hooks.generateRandomId()}.wav';
       });
 
       await _audioRecorder.start(

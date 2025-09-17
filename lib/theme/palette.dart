@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Application palette colors (Dark and Light mode)
 @immutable
 class Palette {
   Palette({this.isDark = false});

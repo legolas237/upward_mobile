@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 
 part 'theme_model.dart';
 
+/// Handle theme state
 class ThemeViewmodel extends Cubit<ThemeModel> {
   ThemeViewmodel([this.status]) : super(ThemeModel(status: status));
 

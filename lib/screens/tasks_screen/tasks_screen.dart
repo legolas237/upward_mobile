@@ -1,3 +1,4 @@
+import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -11,6 +12,7 @@ import 'package:upward_mobile/theme/palette.dart';
 import 'package:upward_mobile/theme/theme_provider.dart';
 import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/utilities/hooks.dart';
+import 'package:upward_mobile/viewmodels/localization/localization_viewmodel.dart';
 import 'package:upward_mobile/viewmodels/tasks/tasks_viewmodel.dart';
 import 'package:upward_mobile/widgets/app_bar_action.dart';
 import 'package:upward_mobile/widgets/app_scaffold.dart';
@@ -38,6 +40,8 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreenState extends State<TasksScreen> {
   late TaskStatus _status;
   late Map<String, Task> _selectedTasks;
+  late bool _filterByDate = false;
+  late DateTime? _filterDate = null;
 
   @override
   void initState() {
@@ -53,21 +57,25 @@ class _TasksScreenState extends State<TasksScreen> {
     widget.palette = ThemeProvider.of(context)!.theme.palette;
     // Vars ...
     widget.user = RepositoryProvider.of<UserRepository>(context).user()!;
+    var localizationCubit = BlocProvider.of<LocalizationViewmodel>(
+      context,
+      listen: true,
+    );
 
-    return BlocBuilder<TasksViewmodel, TasksModel>(
+    return BlocBuilder<TasksViewModel, TasksModel>(
       builder: (context, state) {
         return ScaffoldWidget(
           automaticallyImplyLeading: false,
           resizeToAvoidBottomInset: false,
           centerTitle: false,
-          title: " Hello, ${Hooks.firstWords(widget.user.name, 1)}",
+          title: "Hello, ${Hooks.firstWords(widget.user.name, 1)}",
           titleColor: widget.palette.isDark ? widget.palette.textColor(1.0) : widget.palette.primaryColor(1.0),
           actions: [
             if(_selectedTasks.isEmpty) ... [
               if(state.status == TasksModelStatus.loaded || state.status == TasksModelStatus.intermediate) AppBarActionWidget(
                 icon: Icons.refresh_outlined,
                 onPressed: () {
-                  BlocProvider.of<TasksViewmodel>(context).tasks();
+                  BlocProvider.of<TasksViewModel>(context).tasks();
                 },
               ),
               if(state.status != TasksModelStatus.error) AppBarActionWidget(
@@ -81,14 +89,22 @@ class _TasksScreenState extends State<TasksScreen> {
               ),
               AppBarActionWidget(
                 icon: Icons.event_outlined,
-                onPressed: () {},
+                color: _filterByDate
+                    ? (widget.palette.isDark ? widget.palette.secondaryColor(1.0) : widget.palette.primaryColor(1.0))
+                    : widget.palette.iconColor(1.0),
+                backgroundColor: _filterByDate ? widget.palette.surfaceColor(1.0) : Colors.transparent,
+                onPressed: () {
+                  setState(() {
+                    _filterByDate = !_filterByDate;
+                  });
+                },
               ),
             ],
             if(_selectedTasks.isNotEmpty && state.status != TasksModelStatus.processing) AppBarActionWidget(
               icon: MdiIcons.trashCanOutline,
               color: widget.palette.iconColor(1.0),
               onPressed: () {
-                context.read<TasksViewmodel>().deleteTasks(
+                context.read<TasksViewModel>().deleteTasks(
                   _selectedTasks.values.toList(),
                 );
                 // Clear
@@ -131,6 +147,30 @@ class _TasksScreenState extends State<TasksScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if(_filterByDate)... [
+                  const SizedBox(height: 10.0),
+                  CalendarTimeline(
+                    initialDate: _filterDate ?? DateTime.now(),
+                    firstDate: DateTime(2024, 1, 1),
+                    lastDate: DateTime.now().add(
+                      Duration(days: 40),
+                    ),
+                    leftMargin: 15.0,
+                    monthColor: widget.palette.isDark ? widget.palette.secondaryColor(1.0) : widget.palette.primaryColor(1.0),
+                    dayColor: widget.palette.captionColor(1.0),
+                    activeDayColor: widget.palette.scaffoldColor(1.0),
+                    activeBackgroundDayColor: widget.palette.isDark ? widget.palette.secondaryColor(1.0) : widget.palette.primaryColor(1.0),
+                    fontSize: 16.0,
+                    width: 50.0,
+                    height: 60.0,
+                    locale: localizationCubit.state.language,
+                    onDateSelected: (date) {
+                      setState(() {
+                        _filterDate = date;
+                      });
+                    },
+                  ),
+                ],
                 if(state.tasks.isNotEmpty) SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.symmetric(
@@ -157,7 +197,7 @@ class _TasksScreenState extends State<TasksScreen> {
                   child: Builder(
                     builder: (_,) {
                       if(state.status == TasksModelStatus.initial) {
-                        BlocProvider.of<TasksViewmodel>(context).tasks();
+                        BlocProvider.of<TasksViewModel>(context).tasks();
                       }
 
                       if(state.status == TasksModelStatus.error) {
@@ -165,7 +205,7 @@ class _TasksScreenState extends State<TasksScreen> {
                           icon: Icons.error_outline,
                           subTitle: AppLocalizations.of(context)!.anErrorOccurred,
                           callback: () {
-                            BlocProvider.of<TasksViewmodel>(context).tasks();
+                            BlocProvider.of<TasksViewModel>(context).tasks();
                           },
                         );
                       }
@@ -179,8 +219,11 @@ class _TasksScreenState extends State<TasksScreen> {
                           );
                         }
 
-                        final tasks = _status == TaskStatus.all ? state.tasks : state.tasks.where((task) {
+                        var tasks = _status == TaskStatus.all ? state.tasks : state.tasks.where((task) {
                           return task.status == _status;
+                        }).toList();
+                        tasks = _filterDate == null ? tasks : tasks.where((task) {
+                          return Hooks.toHumanDate(task.date!, 'EEE dd MMM') == Hooks.toHumanDate(_filterDate!, 'EEE dd MMM');
                         }).toList();
 
                         return ListView(

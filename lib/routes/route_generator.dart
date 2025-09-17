@@ -12,6 +12,7 @@ import 'package:upward_mobile/viewmodels/onboarding/onboarding_viewmodel.dart';
 import 'package:upward_mobile/widgets/app_bar_action.dart';
 import 'package:upward_mobile/widgets/app_scaffold.dart';
 
+/// Application navigation routes
 class RouteGenerator {
   // For navigator
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

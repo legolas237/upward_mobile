@@ -47,7 +47,7 @@ class CommandsEditorWidget extends StatelessWidget {
 
                 if(lastElement is TaskAttachment || lastElement is TaskCheck) {
                   callback?.call(command, TaskText(
-                    "${Hooks.generateRandomId()}_${task.elements.length + 1}${DateTime.now().millisecondsSinceEpoch}",
+                    "${Hooks.generateRandomId()}_${task.elements.length + 1}",
                     content: "",
                   ));
                 } else {
@@ -57,7 +57,7 @@ class CommandsEditorWidget extends StatelessWidget {
 
               if(command.key == Constants.checklistCommand) {
                 callback?.call(command, TaskCheck(
-                  "${Hooks.generateRandomId()}_${task.elements.length + 1}${DateTime.now().millisecondsSinceEpoch}",
+                  "${Hooks.generateRandomId()}_${task.elements.length + 1}",
                   content: "",
                 ));
               }

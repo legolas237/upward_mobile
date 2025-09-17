@@ -7,8 +7,9 @@ import 'package:upward_mobile/repositories/task_repository.dart';
 
 part 'tasks_model.dart';
 
-class TasksViewmodel extends Cubit<TasksModel> {
-  TasksViewmodel({
+/// Handle tasks view model with state
+class TasksViewModel extends Cubit<TasksModel> {
+  TasksViewModel({
     required TaskRepository repository,
   }) : _repository = repository, super(TasksModel());
 

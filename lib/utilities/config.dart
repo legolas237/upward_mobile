@@ -37,7 +37,7 @@ abstract class Constants {
   static const double appBarTitle = 20.0;
   static const double appBarIconPadding = 4.0;
   static const double largeSpinnerSize = 50.0;
-  static const double bottomSheetRadius = 10.0;
+  static const double bottomSheetRadius = 20.0;
 
   // Others
   static const String textCommand = "text_command";

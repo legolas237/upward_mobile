@@ -10,6 +10,7 @@ import 'package:upward_mobile/widgets/app_scaffold.dart';
 import 'package:upward_mobile/widgets/borderless_wrapper.dart';
 import 'package:upward_mobile/widgets/retro_spinner.dart';
 
+/// Simple image viewer to display an image
 // ignore: must_be_immutable
 class ImageViewerScreen extends StatefulWidget {
   static const String routePath = "/image-view";

@@ -12,6 +12,7 @@ import 'package:upward_mobile/theme/theme_provider.dart';
 import 'package:upward_mobile/viewmodels/localization/localization_viewmodel.dart';
 import 'package:upward_mobile/viewmodels/theme/theme_viewmodel.dart';
 
+/// Application configurations
 // ignore: must_be_immutable
 class UpwardApp extends StatefulWidget {
   const UpwardApp({super.key});

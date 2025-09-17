@@ -7,6 +7,7 @@ import 'package:upward_mobile/repositories/user_repository.dart';
 
 part 'onboarding_model.dart';
 
+/// Handle onboarding screen state
 class OnboardingViewmodel extends Cubit<OnboardingModel> {
   OnboardingViewmodel({
     required UserRepository repository,

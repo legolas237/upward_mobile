@@ -100,7 +100,7 @@ class Task extends Equatable {
 
   factory Task.empty() {
     return Task(
-      id: '${Hooks.generateRandomId()}_${DateTime.now().millisecondsSinceEpoch}',
+      id: Hooks.generateRandomId(),
       title: "",
       elements: const <String, TaskElement>{},
       backgroundKey: null,

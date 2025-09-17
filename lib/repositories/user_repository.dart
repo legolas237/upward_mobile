@@ -1,22 +1,45 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
+import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/models/user.dart';
-import 'package:upward_mobile/services/user_service.dart';
 
 @immutable
 class UserRepository {
-  final UserService _provider = UserService();
 
+  /// Auth user
+  ///
+  /// return: User
   User? user() {
-    return _provider.user();
+    var hiveBox = Hive.box(Constants.userTable);
+
+    // Finally ..
+    if(hiveBox.isEmpty) {
+      return null;
+    }
+
+    return hiveBox.get(Constants.userHiveAdapterId);
   }
 
+  /// Set auth user
+  ///
+  /// User: user
+  /// return: void
   Future<void> auth(User user) async {
-    return await _provider.auth(user);
+    await Hive.box(Constants.userTable).add(user);
   }
 
+  /// Log out
+  /// return: void
   Future<void> logOut() async {
-    _provider.logOut();
+    // Data base
+    // Users
+    final userBox = Hive.box(Constants.userTable);
+    if(userBox.isOpen) await userBox.close();
+    await userBox.deleteFromDisk();
+    // Data collection
+    final upwardBox = Hive.box(Constants.upwardTable);
+    if(upwardBox.isOpen) await upwardBox.close();
+    await upwardBox.deleteFromDisk();
   }
 }

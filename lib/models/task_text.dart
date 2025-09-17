@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:upward_mobile/models/task_element.dart';
 
 part 'task_text.g.dart';

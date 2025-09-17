@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/theme/palette.dart';
 
+/// Manage all application theme: Typography, colors, size ...
 @immutable
 class AppTheme {
   AppTheme({

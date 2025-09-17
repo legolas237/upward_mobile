@@ -15,6 +15,7 @@ import 'package:upward_mobile/widgets/input_border.dart';
 import 'package:upward_mobile/widgets/language.dart';
 import 'package:upward_mobile/widgets/text_error.dart';
 
+/// Onboarding screen
 // ignore: must_be_immutable
 class OnboardingScreen extends StatefulWidget {
   static const String routePath = "/onboarding";

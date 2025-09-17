@@ -18,7 +18,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get next => 'Je continue';
 
   @override
-  String get setYourPreferredLanguage => 'Choisir votre langue préférée';
+  String get setYourPreferredLanguage => 'Choisisser votre langue préférée';
 
   @override
   String get whatIsYourName => 'Pour continuer, veuillez saisir votre nom.';

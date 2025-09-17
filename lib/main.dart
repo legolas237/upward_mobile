@@ -13,15 +13,15 @@ import 'package:upward_mobile/repositories/user_repository.dart';
 import 'package:upward_mobile/utilities/config.dart';
 import 'package:upward_mobile/models/user.dart';
 import 'package:upward_mobile/utilities/app_bloc_observer.dart';
-import 'package:upward_mobile/utilities/hooks.dart';
 import 'package:upward_mobile/viewmodels/localization/localization_viewmodel.dart';
 import 'package:upward_mobile/viewmodels/tasks/tasks_viewmodel.dart';
 import 'package:upward_mobile/viewmodels/theme/theme_viewmodel.dart';
 
+/// Entry point
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Init services
+  // Init hive box to handle local database
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   Hive
     ..init(appDocumentDirectory.path)
@@ -40,6 +40,7 @@ Future<void> main() async {
   runApp(MainApp());
 }
 
+/// Main app
 // ignore: must_be_immutable
 class MainApp extends StatefulWidget {
   const MainApp({super.key});
@@ -58,6 +59,7 @@ class _MainAppState extends State<MainApp> {
     // Check brightness
     var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
 
+    // Install repository and global cubits
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<UserRepository>(
@@ -66,17 +68,20 @@ class _MainAppState extends State<MainApp> {
       ],
       child: MultiBlocProvider(
         providers: [
+          // For localization
           BlocProvider<LocalizationViewmodel>(
             lazy: false,
             create: (BuildContext context) => LocalizationViewmodel(),
           ),
+          // Handle theme
           BlocProvider<ThemeViewmodel>(
             create: (BuildContext context) => ThemeViewmodel(
               brightness == Brightness.dark ? ThemeStatusEnum.dark : ThemeStatusEnum.light,
             ),
           ),
-          BlocProvider<TasksViewmodel>(
-            create: (context) => TasksViewmodel(
+          // Task view model
+          BlocProvider<TasksViewModel>(
+            create: (context) => TasksViewModel(
               repository: TaskRepository(),
             ),
           ),

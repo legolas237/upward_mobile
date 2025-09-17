@@ -14,6 +14,7 @@ import 'package:upward_mobile/theme/theme_provider.dart';
 import 'package:upward_mobile/widgets/app_scaffold.dart';
 import 'package:upward_mobile/widgets/button.dart';
 
+/// Init screen
 // ignore: must_be_immutable
 class SplashScreen extends StatefulWidget {
   static const String routePath = "/";

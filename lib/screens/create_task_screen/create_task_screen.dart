@@ -29,6 +29,7 @@ import 'package:upward_mobile/widgets/spinner.dart';
 import 'package:upward_mobile/widgets/task_status_chooser.dart';
 import 'package:upward_mobile/widgets/wave_record.dart';
 
+/// Create task screen
 // ignore: must_be_immutable
 class CreateTasksScreen extends StatefulWidget {
   static const String routePath = "/create-task";
@@ -86,7 +87,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
     // Get theme palette
     widget.palette = ThemeProvider.of(context)!.theme.palette;
 
-    return BlocConsumer<TasksViewmodel, TasksModel>(
+    return BlocConsumer<TasksViewModel, TasksModel>(
       listener: (context, state) {
         if(state.status == TasksModelStatus.loaded || state.status == TasksModelStatus.intermediate) {
           Navigator.pop(context);
@@ -109,7 +110,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
               onPressed: () {
                 if(_task.isNotEmpty()) {
                   vLog(_task.toJson());
-                  context.read<TasksViewmodel>().deleteTasks([_task]);
+                  context.read<TasksViewModel>().deleteTasks([_task]);
                 }
               },
             ),
@@ -119,7 +120,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
               onPressed: () {
                 if(_task.isNotEmpty()) {
                   vLog(_task.toJson());
-                  context.read<TasksViewmodel>().addTask(_task);
+                  context.read<TasksViewModel>().addTask(_task);
                 }
               },
             ),
@@ -227,18 +228,18 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
                       CommandsEditorWidget(
                         task: _task,
                         callback: (command, taskElement) {
-                          if(_command?.key == command.key) {
+                          if(command.key == Constants.checklistCommand || command.key == Constants.textCommand) {
                             _command = null;
-                          } else {
+                          } else{
                             // Set command editor
                             _command = command;
+                          }
 
-                            if(taskElement != null) {
-                              _task = _task.addTaskElement(taskElement);
-                            } else {
-                              if(command.key != Constants.microCommand && command.key != Constants.imageCommand) {
-                                _mainNode.requestFocus();
-                              }
+                          if(taskElement != null) {
+                            _task = _task.addTaskElement(taskElement);
+                          } else {
+                            if(command.key != Constants.microCommand && command.key != Constants.imageCommand) {
+                              _mainNode.requestFocus();
                             }
                           }
 
@@ -256,7 +257,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
                       _command = null;
                       if(file != null) {
                         _task = _task.addTaskElement(TaskAttachment(
-                          "${Hooks.generateRandomId()}_${_task.elements.length + 1}${DateTime.now().millisecondsSinceEpoch}",
+                          "${Hooks.generateRandomId()}_${_task.elements.length + 1}",
                           file: file,
                           duration: duration,
                           type: AttachmentType.vocal,
@@ -271,7 +272,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
                       _command = null;
                       if(file != null) {
                         _task = _task.addTaskElement(TaskAttachment(
-                          "${Hooks.generateRandomId()}_${_task.elements.length + 1}${DateTime.now().millisecondsSinceEpoch}",
+                          "${Hooks.generateRandomId()}_${_task.elements.length + 1}",
                           file: file,
                           type: AttachmentType.image,
                         ));
@@ -287,6 +288,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
     );
   }
 
+  /// Build task element widget
   List<Widget> _buildTaskElements() {
     List<Widget> result = [];
     List<TaskAttachment> attachments = [];
@@ -317,6 +319,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
     return result;
   }
 
+  /// Build text task element widget
   Widget _buildTextElement(TaskText element) {
     return Padding(
       padding: const EdgeInsets.only(
@@ -364,6 +367,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
     );
   }
 
+  /// Build check task element widget
   Widget _buildCheckElement(TaskCheck element) {
     final currentElement = _task.elements[element.id] as TaskCheck;
 
@@ -446,6 +450,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
     );
   }
 
+  /// Build attachment task element widget
   Widget _buildAttachments(List<TaskAttachment> elements) {
     return Padding(
       padding: const EdgeInsets.only(
@@ -527,6 +532,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
 
   // Utilities
 
+  /// Try to play record
   Future<void> _playRecording(TaskAttachment record) async {
     try {
       setState(() {
@@ -542,6 +548,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
     }
   }
 
+  /// Stop record player
   Future<void> _stopPlaying() async {
     await _audioPlayer.stop();
     setState(() {
@@ -550,6 +557,7 @@ class _CreateTasksScreenState extends State<CreateTasksScreen> {
     });
   }
 
+  /// Listen player state
   void _listenPlayerState() {
     _audioPlayer.playerStateStream.listen((playerState) {
       final processingState = playerState.processingState;
